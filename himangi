@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Don’t Open 😠</title>
+
+<style>
+body{
+    margin:0;
+    height:100vh;
+    background: linear-gradient(135deg,#ff9a9e,#fad0c4);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family:'Comic Sans MS',cursive;
+    overflow:hidden;
+}
+
+.card{
+    background:white;
+    padding:40px;
+    border-radius:30px;
+    text-align:center;
+    box-shadow:0 30px 60px rgba(0,0,0,0.3);
+    animation: entry 1.2s ease;
+    max-width:360px;
+}
+
+@keyframes entry{
+    0%{transform:scale(0); opacity:0;}
+    100%{transform:scale(1);}
+}
+
+h1{
+    color:#ff1744;
+    font-size:26px;
+}
+
+button{
+    margin-top:20px;
+    padding:12px 25px;
+    font-size:18px;
+    border:none;
+    border-radius:25px;
+    background:#ff1744;
+    color:white;
+    cursor:pointer;
+}
+.heart{
+    position:absolute;
+    font-size:26px;
+    animation: float 5s linear infinite;
+}
+@keyframes float{
+    0%{transform:translateY(100vh); opacity:1;}
+    100%{transform:translateY(-10vh); opacity:0;}
+}
+</style>
+</head>
+
+<body>
+
+<!-- 🐱 MEOW SOUND (UNLOCKED ON CLICK) -->
+<audio id="meowSound" preload="auto">
+  <source src="https://cdn.pixabay.com/audio/2022/03/15/audio_9c8b6d3f55.mp3" type="audio/mpeg">
+</audio>
+
+<div class="card">
+    <h1 id="text">Isse mat kholna 😠</h1>
+    <button id="btn" onclick="nextStep()">OPEN</button>
+</div>
+
+<script>
+let step = 0;
+let audioUnlocked = false;
+
+function playMeow(){
+    const meow = document.getElementById("meowSound");
+    meow.currentTime = 0;
+    meow.play().catch(()=>{});
+}
+
+function nextStep(){
+    const text = document.getElementById("text");
+    const btn = document.getElementById("btn");
+
+    // 🔓 unlock audio on first click
+    if(!audioUnlocked){
+        playMeow();
+        audioUnlocked = true;
+    }
+
+    if(step === 0){
+        text.innerHTML = "Mana kiya tha na 😒";
+        btn.innerText = "OPEN AGAIN";
+        step++;
+    }
+    else if(step === 1){
+        text.innerHTML = "I LOVEEEEEEEE YOUUUUUUUUUUUUU ❤️";
+        btn.innerText = "NEXT";
+        playMeow();
+        startHearts();
+        step++;
+    }
+    else if(step === 2){
+        text.innerHTML = "Tu baccchee hai merii 🤌🏻…<br>Bacchee🥲🫂";
+        btn.innerText = "OPEN";
+        step++;
+    }
+    else if(step === 3){
+        text.innerHTML = "IIII LOVEEEEE YOUUUU<br>BHTTTTT SARAAAAAAAAA 💖💖💖<br><br>HIMANGI 🐱❤️";
+        btn.style.display="none";
+        playMeow();
+        setTimeout(playMeow,700); // second meow 😄
+        startHearts();
+    }
+}
+
+function startHearts(){
+    setInterval(()=>{
+        const h=document.createElement("div");
+        h.className="heart";
+        h.innerHTML="❤️";
+        h.style.left=Math.random()*100+"vw";
+        document.body.appendChild(h);
+        setTimeout(()=>h.remove(),5000);
+    },300);
+}
+</script>
+
+</body>
+</html>
